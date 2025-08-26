@@ -1,6 +1,6 @@
 import pytest
 from fastapi import status
-from tests.conftest import get_auth_headers
+from tests.conftest import get_auth_headers, URL_PREFIX
 from tests.test_client_routes import create_client, delete_client
 from tests.test_service_routes import create_service, delete_service
 
@@ -9,7 +9,9 @@ def create_contract(client, sample_contract_data):
     """Create a contract instance for tests"""
 
     headers = get_auth_headers(client)
-    response = client.post("/contracts/", json=sample_contract_data, headers=headers)
+    response = client.post(
+        f"{URL_PREFIX}/contracts/", json=sample_contract_data, headers=headers
+    )
     data = response.json()
     return {"headers": headers, "contract_id": data["data"]["id"], "data": data["data"]}
 
@@ -18,7 +20,7 @@ def delete_contract(client, contract_id):
     """Delete a contract instance after tests."""
 
     headers = get_auth_headers(client)
-    client.delete(f"/contracts/{contract_id}", headers=headers)
+    client.delete(f"{URL_PREFIX}/contracts/{contract_id}", headers=headers)
 
 
 class TestContractRoutes:
@@ -39,7 +41,9 @@ class TestContractRoutes:
             "client_id": client_id,
             "service_id": service_id,
         }
-        response = client.post("/contracts/", json=contract_data, headers=headers)
+        response = client.post(
+            f"{URL_PREFIX}/contracts/", json=contract_data, headers=headers
+        )
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -58,7 +62,7 @@ class TestContractRoutes:
     def test_create_contract_unauthorized(self, client, sample_contract_data):
         """Test creating contract without authentication"""
 
-        response = client.post("/contracts/", json=sample_contract_data)
+        response = client.post(f"{URL_PREFIX}/contracts/", json=sample_contract_data)
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_create_contract_invalid_client_and_service(
@@ -72,7 +76,9 @@ class TestContractRoutes:
             "client_id": 99999,
             "service_id": 99999,
         }
-        response = client.post("/contracts/", json=contract_data, headers=headers)
+        response = client.post(
+            f"{URL_PREFIX}/contracts/", json=contract_data, headers=headers
+        )
         assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     # def test_get_contracts_by_client(
@@ -130,7 +136,7 @@ class TestContractRoutes:
             },
         )
         contract_id = contract_data["contract_id"]
-        response = client.get(f"/contracts/{contract_id}", headers=headers)
+        response = client.get(f"{URL_PREFIX}/contracts/{contract_id}", headers=headers)
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -147,7 +153,7 @@ class TestContractRoutes:
         """Test getting non-existent contract"""
 
         headers = get_auth_headers(client)
-        response = client.get("/contracts/99999", headers=headers)
+        response = client.get(f"{URL_PREFIX}/contracts/99999", headers=headers)
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
     def test_update_contract_success(
@@ -174,7 +180,7 @@ class TestContractRoutes:
             "value": 299.90,
         }
         response = client.put(
-            f"/contracts/{contract_id}", json=update_data, headers=headers
+            f"{URL_PREFIX}/contracts/{contract_id}", json=update_data, headers=headers
         )
 
         assert response.status_code == status.HTTP_200_OK
@@ -195,7 +201,9 @@ class TestContractRoutes:
             "value": 299.90,
         }
 
-        response = client.put("/contracts/99999", json=update_data, headers=headers)
+        response = client.put(
+            f"{URL_PREFIX}/contracts/99999", json=update_data, headers=headers
+        )
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
     def test_toggle_contract_status_success(
@@ -223,7 +231,7 @@ class TestContractRoutes:
         contract_id = contract_data["contract_id"]
         original_status = contract_data["data"]["status"]
         response = client.patch(
-            f"/contracts/{contract_id}/toggle-status", headers=headers
+            f"{URL_PREFIX}/contracts/{contract_id}/toggle-status", headers=headers
         )
 
         assert response.status_code == status.HTTP_200_OK
@@ -240,7 +248,9 @@ class TestContractRoutes:
         """Test toggling status of non-existent contract"""
 
         headers = get_auth_headers(client)
-        response = client.patch("/contracts/99999/toggle-status", headers=headers)
+        response = client.patch(
+            f"{URL_PREFIX}/contracts/99999/toggle-status", headers=headers
+        )
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
     def test_delete_contract_success(
@@ -267,7 +277,9 @@ class TestContractRoutes:
             },
         )
         contract_id = contract_data["contract_id"]
-        response = client.delete(f"/contracts/{contract_id}", headers=headers)
+        response = client.delete(
+            f"{URL_PREFIX}/contracts/{contract_id}", headers=headers
+        )
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -282,5 +294,5 @@ class TestContractRoutes:
         """Test deleting non-existent contract"""
         headers = get_auth_headers(client)
 
-        response = client.delete("/contracts/99999", headers=headers)
+        response = client.delete(f"{URL_PREFIX}/contracts/99999", headers=headers)
         assert response.status_code == status.HTTP_404_NOT_FOUND

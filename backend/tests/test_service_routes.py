@@ -1,6 +1,6 @@
 import pytest
 from fastapi import status
-from tests.conftest import get_auth_headers
+from tests.conftest import get_auth_headers, URL_PREFIX
 from tests.test_supplier_routes import create_supplier, delete_supplier
 
 
@@ -8,7 +8,9 @@ def create_service(client, sample_service_data):
     """Create a service instance for tests"""
 
     headers = get_auth_headers(client)
-    response = client.post("/services/", json=sample_service_data, headers=headers)
+    response = client.post(
+        f"{URL_PREFIX}/services/", json=sample_service_data, headers=headers
+    )
     data = response.json()
     return {"headers": headers, "service_id": data["data"]["id"], "data": data["data"]}
 
@@ -17,7 +19,7 @@ def delete_service(client, service_id):
     """Delete a service instance after tests."""
 
     headers = get_auth_headers(client)
-    client.delete(f"/services/{service_id}", headers=headers)
+    client.delete(f"{URL_PREFIX}/services/{service_id}", headers=headers)
 
 
 class TestServiceRoutes:
@@ -31,7 +33,9 @@ class TestServiceRoutes:
         headers = get_auth_headers(client)
         supplier_id = create_supplier(client, sample_supplier_data)["supplier_id"]
         service_data = {**sample_service_data, "supplier_id": supplier_id}
-        response = client.post("/services/", json=service_data, headers=headers)
+        response = client.post(
+            f"{URL_PREFIX}/services/", json=service_data, headers=headers
+        )
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -53,7 +57,9 @@ class TestServiceRoutes:
         """Test creating a service"""
 
         headers = get_auth_headers(client)
-        response = client.post("/services/", json=sample_service_data, headers=headers)
+        response = client.post(
+            f"{URL_PREFIX}/services/", json=sample_service_data, headers=headers
+        )
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -73,7 +79,7 @@ class TestServiceRoutes:
     def test_create_service_unauthorized(self, client, sample_service_data):
         """Test creating service without authentication"""
 
-        response = client.post("/services/", json=sample_service_data)
+        response = client.post(f"{URL_PREFIX}/services/", json=sample_service_data)
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_get_all_services_success(
@@ -84,7 +90,7 @@ class TestServiceRoutes:
         headers = get_auth_headers(client)
         full_data = create_service(client, sample_service_data)
         service_id = full_data["service_id"]
-        response = client.get("/services/", headers=headers)
+        response = client.get(f"{URL_PREFIX}/services/", headers=headers)
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -102,7 +108,7 @@ class TestServiceRoutes:
         headers = get_auth_headers(client)
         full_data = create_service(client, sample_service_data)
         service_id = full_data["service_id"]
-        response = client.get(f"/services/{service_id}", headers=headers)
+        response = client.get(f"{URL_PREFIX}/services/{service_id}", headers=headers)
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -121,7 +127,7 @@ class TestServiceRoutes:
         """Test getting non-existent service"""
 
         headers = get_auth_headers(client)
-        response = client.get("/services/99999", headers=headers)
+        response = client.get(f"{URL_PREFIX}/services/99999", headers=headers)
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
     def test_update_service_success(self, client, sample_service_data):
@@ -138,7 +144,7 @@ class TestServiceRoutes:
             "periodicity": "annual",
         }
         response = client.put(
-            f"/services/{service_id}", json=update_data, headers=headers
+            f"{URL_PREFIX}/services/{service_id}", json=update_data, headers=headers
         )
 
         assert response.status_code == status.HTTP_200_OK
@@ -163,7 +169,9 @@ class TestServiceRoutes:
             "cost": 100.0,
             "periodicity": "annual",
         }
-        response = client.put("/services/99999", json=update_data, headers=headers)
+        response = client.put(
+            f"{URL_PREFIX}/services/99999", json=update_data, headers=headers
+        )
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
     def test_toggle_service_status_success(
@@ -176,7 +184,7 @@ class TestServiceRoutes:
         service_id = full_data["service_id"]
         original_status = full_data["data"]["status"]
         response = client.patch(
-            f"/services/{service_id}/toggle-status", headers=headers
+            f"{URL_PREFIX}/services/{service_id}/toggle-status", headers=headers
         )
 
         assert response.status_code == status.HTTP_200_OK
@@ -190,7 +198,9 @@ class TestServiceRoutes:
         """Test toggling status of non-existent service"""
 
         headers = get_auth_headers(client)
-        response = client.patch("/services/99999/toggle-status", headers=headers)
+        response = client.patch(
+            f"{URL_PREFIX}/services/99999/toggle-status", headers=headers
+        )
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
     def test_delete_service_success(
@@ -201,7 +211,7 @@ class TestServiceRoutes:
         headers = get_auth_headers(client)
         full_data = create_service(client, sample_service_data)
         service_id = full_data["service_id"]
-        response = client.delete(f"/services/{service_id}", headers=headers)
+        response = client.delete(f"{URL_PREFIX}/services/{service_id}", headers=headers)
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -212,5 +222,5 @@ class TestServiceRoutes:
         """Test deleting non-existent service"""
 
         headers = get_auth_headers(client)
-        response = client.delete("/services/99999", headers=headers)
+        response = client.delete(f"{URL_PREFIX}/services/99999", headers=headers)
         assert response.status_code == status.HTTP_404_NOT_FOUND

@@ -1,13 +1,15 @@
 import pytest
 from fastapi import status
-from tests.conftest import get_auth_headers
+from tests.conftest import get_auth_headers, URL_PREFIX
 
 
 def create_client(client, sample_client_data):
     """Create the client instance for tests"""
 
     headers = get_auth_headers(client)
-    response = client.post("/clients/", json=sample_client_data, headers=headers)
+    response = client.post(
+        f"{URL_PREFIX}/clients/", json=sample_client_data, headers=headers
+    )
     data = response.json()
 
     return {
@@ -22,7 +24,7 @@ def delete_client(client, client_id):
 
     headers = get_auth_headers(client)
     client.delete(
-        f"/clients/{client_id}",
+        f"{URL_PREFIX}/clients/{client_id}",
         headers=headers,
     )
 
@@ -35,7 +37,9 @@ class TestClientRoutes:
 
         headers = get_auth_headers(client)
 
-        response = client.post("/clients/", json=sample_client_data, headers=headers)
+        response = client.post(
+            f"{URL_PREFIX}/clients/", json=sample_client_data, headers=headers
+        )
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -51,7 +55,7 @@ class TestClientRoutes:
     def test_unauthorized_access(self, client, sample_client_data):
         """Test creating client without authentication"""
 
-        response = client.post("/clients/", json=sample_client_data)
+        response = client.post(f"{URL_PREFIX}/clients/", json=sample_client_data)
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_create_client_duplicate_email(
@@ -64,7 +68,9 @@ class TestClientRoutes:
         )["client_id"]
 
         headers = get_auth_headers(client)
-        response = client.post("/clients/", json=sample_client_data, headers=headers)
+        response = client.post(
+            f"{URL_PREFIX}/clients/", json=sample_client_data, headers=headers
+        )
         assert response.status_code == status.HTTP_400_BAD_REQUEST
 
         delete_client(client, client_id=client_id)
@@ -80,7 +86,7 @@ class TestClientRoutes:
         )["client_id"]
 
         headers = get_auth_headers(client)
-        response = client.get("/clients/", headers=headers)
+        response = client.get(f"{URL_PREFIX}/clients/", headers=headers)
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -101,7 +107,7 @@ class TestClientRoutes:
         )["client_id"]
 
         headers = get_auth_headers(client)
-        response = client.get(f"/clients/{client_id}", headers=headers)
+        response = client.get(f"{URL_PREFIX}/clients/{client_id}", headers=headers)
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -116,7 +122,7 @@ class TestClientRoutes:
 
         headers = get_auth_headers(client)
 
-        response = client.get("/clients/99999", headers=headers)
+        response = client.get(f"{URL_PREFIX}/clients/99999", headers=headers)
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
     def test_update_client_success(self, client, sample_user_data, sample_client_data):
@@ -135,7 +141,7 @@ class TestClientRoutes:
             "phone": "09876543210",
         }
         response = client.put(
-            f"/clients/{client_id}", json=update_data, headers=headers
+            f"{URL_PREFIX}/clients/{client_id}", json=update_data, headers=headers
         )
 
         assert response.status_code == status.HTTP_200_OK
@@ -158,7 +164,9 @@ class TestClientRoutes:
             "phone": "09876543210",
         }
 
-        response = client.put("/clients/99999", json=update_data, headers=headers)
+        response = client.put(
+            f"{URL_PREFIX}/clients/99999", json=update_data, headers=headers
+        )
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
     def test_toggle_client_status_success(
@@ -174,7 +182,9 @@ class TestClientRoutes:
         client_id = full_data["client_id"]
         original_status = full_data["client_data"]["status"]
 
-        response = client.patch(f"/clients/{client_id}/toggle-status", headers=headers)
+        response = client.patch(
+            f"{URL_PREFIX}/clients/{client_id}/toggle-status", headers=headers
+        )
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -189,7 +199,9 @@ class TestClientRoutes:
 
         headers = get_auth_headers(client)
 
-        response = client.patch("/clients/99999/toggle-status", headers=headers)
+        response = client.patch(
+            f"{URL_PREFIX}/clients/99999/toggle-status", headers=headers
+        )
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
     def test_delete_client_success(self, client, sample_user_data, sample_client_data):
@@ -202,7 +214,7 @@ class TestClientRoutes:
         )
         client_id = full_data["client_id"]
 
-        response = client.delete(f"/clients/{client_id}", headers=headers)
+        response = client.delete(f"{URL_PREFIX}/clients/{client_id}", headers=headers)
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -215,5 +227,5 @@ class TestClientRoutes:
 
         headers = get_auth_headers(client)
 
-        response = client.delete("/clients/99999", headers=headers)
+        response = client.delete(f"{URL_PREFIX}/clients/99999", headers=headers)
         assert response.status_code == status.HTTP_404_NOT_FOUND

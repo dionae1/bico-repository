@@ -1,13 +1,15 @@
 import pytest
 from fastapi import status
-from tests.conftest import get_auth_headers
+from tests.conftest import get_auth_headers, URL_PREFIX
 
 
 def create_supplier(client, sample_supplier_data):
     """Create a supplier instance for tests"""
 
     headers = get_auth_headers(client)
-    response = client.post("/suppliers/", json=sample_supplier_data, headers=headers)
+    response = client.post(
+        f"{URL_PREFIX}/suppliers/", json=sample_supplier_data, headers=headers
+    )
     data = response.json()
     return {"headers": headers, "supplier_id": data["data"]["id"], "data": data["data"]}
 
@@ -16,7 +18,7 @@ def delete_supplier(client, supplier_id):
     """Delete a supplier instance after tests."""
 
     headers = get_auth_headers(client)
-    client.delete(f"/suppliers/{supplier_id}", headers=headers)
+    client.delete(f"{URL_PREFIX}/suppliers/{supplier_id}", headers=headers)
 
 
 class TestSupplierRoutes:
@@ -29,7 +31,7 @@ class TestSupplierRoutes:
 
         headers = get_auth_headers(client)
         response = client.post(
-            "/suppliers/", json=sample_supplier_data, headers=headers
+            f"{URL_PREFIX}/suppliers/", json=sample_supplier_data, headers=headers
         )
 
         assert response.status_code == status.HTTP_200_OK
@@ -46,7 +48,7 @@ class TestSupplierRoutes:
     def test_create_supplier_unauthorized(self, client, sample_supplier_data):
         """Test creating supplier without authentication"""
 
-        response = client.post("/suppliers/", json=sample_supplier_data)
+        response = client.post(f"{URL_PREFIX}/suppliers/", json=sample_supplier_data)
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_create_supplier_duplicate_email(self, client, sample_supplier_data):
@@ -54,10 +56,10 @@ class TestSupplierRoutes:
 
         headers = get_auth_headers(client)
         successful = client.post(
-            "/suppliers/", json=sample_supplier_data, headers=headers
+            f"{URL_PREFIX}/suppliers/", json=sample_supplier_data, headers=headers
         )
         response = client.post(
-            "/suppliers/", json=sample_supplier_data, headers=headers
+            f"{URL_PREFIX}/suppliers/", json=sample_supplier_data, headers=headers
         )
         assert response.status_code == status.HTTP_400_BAD_REQUEST
 
@@ -70,7 +72,7 @@ class TestSupplierRoutes:
         create_response = create_supplier(client, sample_supplier_data)
         supplier_id = create_response["supplier_id"]
 
-        response = client.get(f"/suppliers/{supplier_id}", headers=headers)
+        response = client.get(f"{URL_PREFIX}/suppliers/{supplier_id}", headers=headers)
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -84,7 +86,7 @@ class TestSupplierRoutes:
         """Test getting non-existent supplier"""
 
         headers = get_auth_headers(client)
-        response = client.get("/suppliers/99999", headers=headers)
+        response = client.get(f"{URL_PREFIX}/suppliers/99999", headers=headers)
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
     def test_update_supplier_success(
@@ -102,7 +104,7 @@ class TestSupplierRoutes:
             "email": "updated@example.com",
         }
         response = client.put(
-            f"/suppliers/{supplier_id}", json=update_data, headers=headers
+            f"{URL_PREFIX}/suppliers/{supplier_id}", json=update_data, headers=headers
         )
 
         assert response.status_code == status.HTTP_200_OK
@@ -124,7 +126,9 @@ class TestSupplierRoutes:
             "phone": "09876543210",
             "email": "updated@example.com",
         }
-        response = client.put("/suppliers/99999", json=update_data, headers=headers)
+        response = client.put(
+            f"{URL_PREFIX}/suppliers/99999", json=update_data, headers=headers
+        )
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
     def test_toggle_supplier_status_success(
@@ -138,7 +142,7 @@ class TestSupplierRoutes:
         original_status = full_data["data"]["status"]
 
         response = client.patch(
-            f"/suppliers/{supplier_id}/toggle-status", headers=headers
+            f"{URL_PREFIX}/suppliers/{supplier_id}/toggle-status", headers=headers
         )
 
         assert response.status_code == status.HTTP_200_OK
@@ -146,7 +150,7 @@ class TestSupplierRoutes:
 
         assert data["success"] is True
         assert data["data"]["status"] != original_status
-        
+
         delete_supplier(client, supplier_id)
 
     def test_toggle_supplier_status_not_found(self, client, sample_user_data):
@@ -154,7 +158,9 @@ class TestSupplierRoutes:
 
         headers = get_auth_headers(client)
 
-        response = client.patch("/suppliers/99999/toggle-status", headers=headers)
+        response = client.patch(
+            f"{URL_PREFIX}/suppliers/99999/toggle-status", headers=headers
+        )
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
     def test_delete_supplier_success(
@@ -167,7 +173,9 @@ class TestSupplierRoutes:
         full_data = create_supplier(client, sample_supplier_data)
         supplier_id = full_data["supplier_id"]
 
-        response = client.delete(f"/suppliers/{supplier_id}", headers=headers)
+        response = client.delete(
+            f"{URL_PREFIX}/suppliers/{supplier_id}", headers=headers
+        )
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -180,5 +188,5 @@ class TestSupplierRoutes:
 
         headers = get_auth_headers(client)
 
-        response = client.delete("/suppliers/99999", headers=headers)
+        response = client.delete(f"{URL_PREFIX}/suppliers/99999", headers=headers)
         assert response.status_code == status.HTTP_404_NOT_FOUND

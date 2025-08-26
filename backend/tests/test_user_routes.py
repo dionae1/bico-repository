@@ -1,13 +1,15 @@
 import pytest
 from fastapi import status
-from tests.conftest import get_auth_headers
+from tests.conftest import get_auth_headers, URL_PREFIX
 
 
 def create_user(client, sample_user_data):
     """Create a user instance for tests"""
 
     headers = get_auth_headers(client)
-    response = client.post("/users/", json=sample_user_data, headers=headers)
+    response = client.post(
+        f"{URL_PREFIX}/users/", json=sample_user_data, headers=headers
+    )
     data = response.json()
     return {"headers": headers, "user_id": data["data"]["id"], "data": data["data"]}
 
@@ -16,7 +18,7 @@ def delete_user(client, user_id):
     """Delete a user instance after tests."""
 
     headers = get_auth_headers(client)
-    client.delete(f"/users/{user_id}", headers=headers)
+    client.delete(f"{URL_PREFIX}/users/{user_id}", headers=headers)
 
 
 class TestUserRoutes:
@@ -33,7 +35,9 @@ class TestUserRoutes:
             "password": "newpass123",
         }
 
-        response = client.post("/users/", json=new_user_data, headers=headers)
+        response = client.post(
+            f"{URL_PREFIX}/users/", json=new_user_data, headers=headers
+        )
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -48,14 +52,14 @@ class TestUserRoutes:
     def test_create_user_unauthorized(self, client, sample_user_data):
         """Test creating user without authentication"""
 
-        response = client.post("/users/", json=sample_user_data)
+        response = client.post(f"{URL_PREFIX}/users/", json=sample_user_data)
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_get_current_user_success(self, client, admin_user_data):
         """Test getting current user info"""
 
         headers = get_auth_headers(client)
-        response = client.get("/users/me", headers=headers)
+        response = client.get(f"{URL_PREFIX}/users/me", headers=headers)
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -73,7 +77,9 @@ class TestUserRoutes:
         created_user = create_user(client, sample_user_data)
         created_user_id = created_user["user_id"]
 
-        response = client.delete(f"/users/{created_user_id}", headers=headers)
+        response = client.delete(
+            f"{URL_PREFIX}/users/{created_user_id}", headers=headers
+        )
 
         assert response.status_code == status.HTTP_200_OK
 
@@ -86,13 +92,13 @@ class TestUserRoutes:
 
         headers = get_auth_headers(client)
 
-        response = client.delete("/users/99999", headers=headers)
+        response = client.delete(f"{URL_PREFIX}/users/99999", headers=headers)
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
     def test_update_user_success(self, client, admin_user_data):
         """Test updating a user"""
         headers = get_auth_headers(client)
-        user = client.get("/users/me", headers=headers).json()
+        user = client.get(f"{URL_PREFIX}/users/me", headers=headers).json()
         user_id = user["data"]["id"]
 
         update_data = {
@@ -100,7 +106,9 @@ class TestUserRoutes:
             "email": "updated@example.com",
             "password": "newpassword123",
         }
-        response = client.put(f"/users/{user_id}", json=update_data, headers=headers)
+        response = client.put(
+            f"{URL_PREFIX}/users/{user_id}", json=update_data, headers=headers
+        )
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -109,7 +117,9 @@ class TestUserRoutes:
         assert data["data"]["name"] == update_data["name"]
         assert data["data"]["email"] == update_data["email"]
 
-        client.put(f"/users/{user_id}", json=admin_user_data, headers=headers)
+        client.put(
+            f"{URL_PREFIX}/users/{user_id}", json=admin_user_data, headers=headers
+        )
 
     def test_update_different_user(self, client):
         """Test updating non-existent user"""
@@ -120,5 +130,7 @@ class TestUserRoutes:
             "email": "updated@example.com",
             "password": "newpassword123",
         }
-        response = client.put("/users/99999", json=update_data, headers=headers)
+        response = client.put(
+            f"{URL_PREFIX}/users/99999", json=update_data, headers=headers
+        )
         assert response.status_code == status.HTTP_403_FORBIDDEN

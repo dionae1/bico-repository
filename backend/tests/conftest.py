@@ -2,6 +2,8 @@ import pytest
 from fastapi.testclient import TestClient
 from app.main import app
 
+URL_PREFIX = "/api/v1"
+
 
 @pytest.fixture(scope="function")
 def client():
@@ -29,7 +31,7 @@ def sample_supplier_data():
 @pytest.fixture
 def sample_service_data(client, admin_user_data):
     headers = get_auth_headers(client)
-    user = client.get(f"/users/me", headers=headers)
+    user = client.get(f"{URL_PREFIX}/users/me", headers=headers)
     return {
         "user_id": user.json()["data"]["id"],
         "name": "Test Service",
@@ -79,7 +81,7 @@ def get_auth_headers(client):
         "email": admin_user_data["email"],
         "password": admin_user_data["password"],
     }
-    response = client.post("/auth/login", json=login_data)
+    response = client.post(f"{URL_PREFIX}/auth/login", json=login_data)
     token = response.json()["access_token"]
 
     return {"Authorization": f"Bearer {token}"}
