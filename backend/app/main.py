@@ -1,4 +1,5 @@
 from fastapi import APIRouter, FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from app.routes import (
     auth_routes,
@@ -10,6 +11,19 @@ from app.routes import (
 )
 
 app = FastAPI(title="CSManager API", version="1.0.0")
+
+origins = [
+    "http://localhost",
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 v1_router = APIRouter(prefix="/api/v1")
 
