@@ -3,3 +3,11 @@
 * {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.nav-bar {
+    background-color: #FFF1F2;
+}
+
+.nav-item {
+    background-color: #FBCFE8;
+}

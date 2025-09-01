@@ -6,17 +6,11 @@ function Button({ title, onToggle, isActive }) {
         <>
             <button
                 onClick={onToggle}
-                className="text-white font-bold text-center text-xl w-full bg-rose-200 p-3 rounded-xl mb-4 shadow-sm hover:bg-rose-300 transition-colors cursor-pointer"
+                className={`text-white font-bold text-center text-xl w-full bg-rose-400 p-3 rounded-xl hover:bg-rose-600 transition-colors cursor-pointer
+    ${isActive ? 'bg-rose-600' : ''}`}
             >
                 {title}
-            </button>
-
-            {
-                isActive && <>
-                    <InnerButton title="Create" />
-                    <InnerButton title="Manage" />
-                </>
-            }
+            </button >
         </>
 
     );
