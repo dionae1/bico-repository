@@ -1,13 +1,13 @@
 import InnerButton from './InnerButton';
 
-function Button({ title, onToggle, isActive }) {
+function Button({ title, isActive, func }) {
 
     return (
         <>
             <button
-                onClick={onToggle}
-                className={`text-white font-bold text-center text-xl w-full bg-rose-400 p-3 rounded-xl hover:bg-rose-600 transition-colors cursor-pointer
-    ${isActive ? 'bg-rose-600' : ''}`}
+                onClick={func}
+                className={`text-white font-bold text-center text-xl bg-rose-400 p-2 rounded-md hover:bg-rose-500 transition-colors cursor-pointer
+                ${isActive ? 'bg-rose-600' : ''}`}
             >
                 {title}
             </button >

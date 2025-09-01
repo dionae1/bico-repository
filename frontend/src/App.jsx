@@ -1,19 +1,22 @@
-import { useState } from 'react'
-import NavBar from './components/NavBar'
-import TopBar from './components/TopBar'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import ProtectedRoutes from './routes/ProtectedRoutes'
+import LoginPage from './pages/LoginPage'
+import HomePage from './pages/HomePage'
 
 function App() {
 
   return (
-    <>
-      <TopBar />
-      <div className="flex">
-        {/* <NavBar /> */}
-        <main className='bg-gray-50 flex-1 p-4'>
-          <p className='text-2xl font-bold'>Teste</p>
-        </main>
-      </div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+
+        <Route path="/home" element={
+          <ProtectedRoutes>
+            <HomePage />
+          </ProtectedRoutes>
+        } />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
