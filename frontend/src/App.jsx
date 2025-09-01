@@ -8,7 +8,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
+        <Route index element={<LoginPage />} />
 
         <Route path="/home" element={
           <ProtectedRoutes>

@@ -1,14 +1,14 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8000/api/v1/',
+    baseURL: 'http://localhost:8000/api/v1',
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
-axios.interceptors.request.use(
+api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('token');
         if (token) {
@@ -17,7 +17,7 @@ axios.interceptors.request.use(
         return config;
     });
 
-axios.interceptors.response.use(
+api.interceptors.response.use(
     (response) => {
         return response;
     },
