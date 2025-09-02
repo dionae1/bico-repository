@@ -4,10 +4,16 @@
     font-family: 'Nunito', sans-serif;
 }
 
-.nav-bar {
-    background-color: #FFF1F2;
+/* Custom cute animations */
+@keyframes spin-slow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-.nav-item {
-    background-color: #FBCFE8;
+.animate-spin-slow {
+    animation: spin-slow 8s linear infinite;
 }
