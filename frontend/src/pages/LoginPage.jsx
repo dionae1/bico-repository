@@ -1,18 +1,26 @@
 import { FaReact } from "react-icons/fa";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { login } from "../services/auth";
 import Button from "../components/Button";
 
 function LoginPage() {
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleLogin = async (e) => {
         e.preventDefault();
+
+        try {
         const data = await login(email, password);
-        if (data) {
-            window.location.href = "/home";
+
+            if (data) {
+                navigate("/home");
+            }
+        } catch (error) {
+            console.error("Login failed:", error);
         }
     };
 
@@ -31,7 +39,7 @@ function LoginPage() {
 
                         <label htmlFor="password" className="text-2xl mb-1">Password</label>
                         <input type="password" id="password" placeholder="Password" className="mb-6 p-2 border border-gray-300 rounded" value={password} onChange={(e) => setPassword(e.target.value)} />
-                        <Button title="Login" func={handleLogin} />
+                        <Button title="Login" func={handleLogin} variant="login"/>
                     </form>
                 </div>
             </div>
