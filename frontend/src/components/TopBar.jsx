@@ -1,14 +1,37 @@
 import Button from "./Button";
-import { FaReact } from "react-icons/fa";
 import { FaArrowRightToBracket } from "react-icons/fa6";
+import { FaReact, FaHome, FaCog, FaUsers, FaTruck, FaHeart, FaOutdent } from "react-icons/fa";
 import { logout } from "../services/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
-const buttons = ['Home', 'Services', 'Clients', 'Suppliers'];
+const items = [
+    {
+        title: 'Home',
+        path: '/home',
+        icon: FaHome
+    },
+    {
+        title: 'Services',
+        path: '/services',
+        icon: FaCog
+    },
+    {
+        title: 'Clients',
+        path: '/clients',
+        icon: FaUsers
+    },
+    {
+        title: 'Suppliers',
+        path: '/suppliers',
+        icon: FaTruck
+    },
+];
+
 
 function TopBar() {
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleLogout = () => {
         logout();
@@ -22,14 +45,20 @@ function TopBar() {
                 <h1 className="text-xl text-white font-bold">CSM</h1>
             </div>
             <div className="flex space-x-8 m-auto mb-1 mt-1">
-                {buttons.map((button, i) => (
-                    <Link key={button} to={`/${button.toLowerCase()}`} className="text-white text-xl p-2 rounded-md hover:bg-rose-500 transition-colors duration-200 hover:shadow-xs hover:scale-105 active:scale-95">
-                        {button}
-                    </Link>
-                ))}
+                {items.map((item, i) => {
+                    const isActive = item.path === location.pathname;
+                    const icon = <item.icon className="inline-block mr-2" />;
+
+                    return (
+                        <Link key={item.title} to={item.path} className={`text-white text-xl p-2 rounded-md hover:bg-rose-500 transition-colors duration-200 hover:shadow-xs hover:scale-105 active:scale-95 ${isActive ? 'bg-rose-500' : ''}`}>
+                            {icon}
+                            {item.title}
+                        </Link>
+                    );
+                })}
             </div>
             <div className="w-14 p-1">
-                <Button title={<FaArrowRightToBracket className="text-2xl text-white box-content" />} func={handleLogout}/>
+                <Button title={<FaArrowRightToBracket className="text-2xl text-white box-content" />} func={handleLogout} />
             </div>
         </div>
     );
