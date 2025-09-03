@@ -29,7 +29,7 @@ function TopBar() {
                 ))}
             </div>
             <div className="w-14 p-1">
-                <Button title={<FaArrowRightToBracket className="text-2xl text-white box-content" />} func={handleLogout} />
+                <Button title={<FaArrowRightToBracket className="text-2xl text-white box-content" />} func={handleLogout}/>
             </div>
         </div>
     );
