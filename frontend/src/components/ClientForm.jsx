@@ -41,24 +41,24 @@ function ClientForm({ onClientAdded }) {
     };
 
     return (
-        <div className="m-auto shadow-lg/10 p-6 rounded-lg bg-white">
-            <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col justify-center m-auto mb-10 mt-10 space-y-6">
+        <div className="m-auto p-2 rounded-lg bg-white">
+            <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col justify-center m-auto my-4 space-y-2">
 
-                <label htmlFor="clientName">Client Name</label>
-                <input type="text" id="clientName" placeholder="Client Name" required onChange={(e) => setClientName(e.target.value)} value={clientName}
-                    className="border border-gray-300 p-2 rounded-md" />
+                <label htmlFor="clientName">Name</label>
+                <input type="text" id="clientName" placeholder="Jonas Kahnwald" required onChange={(e) => setClientName(e.target.value)} value={clientName}
+                    className="border border-gray-300 p-2 rounded-md mb-6" />
 
-                <label htmlFor="clientEmail">Client Email</label>
-                <input type="email" id="clientEmail" placeholder="Client Email" required onChange={(e) => setClientEmail(e.target.value)} value={clientEmail}
-                    className="border border-gray-300 p-2 rounded-md" />
+                <label htmlFor="clientEmail">Email</label>
+                <input type="email" id="clientEmail" placeholder="jonas1@example.com" required onChange={(e) => setClientEmail(e.target.value)} value={clientEmail}
+                    className="border border-gray-300 p-2 rounded-md mb-6" />
 
-                <label htmlFor="clientPhone">Client Phone</label>
-                <input type="text" id="clientPhone" placeholder="Client Phone" required onChange={(e) => setClientPhone(e.target.value)} value={clientPhone}
-                    className="border border-gray-300 p-2 rounded-md" />
+                <label htmlFor="clientPhone">Phone</label>
+                <input type="text" id="clientPhone" placeholder="(99) 91234-5678" required onChange={(e) => setClientPhone(e.target.value)} value={clientPhone}
+                    className="border border-gray-300 p-2 rounded-md mb-6" />
 
-                <label htmlFor="clientAddress">Client Address</label>
-                <input type="text" id="clientAddress" placeholder="Client Address" required onChange={(e) => setClientAddress(e.target.value)} value={clientAddress}
-                    className="border border-gray-300 p-2 rounded-md" />
+                <label htmlFor="clientAddress">Address</label>
+                <input type="text" id="clientAddress" placeholder="Street 1, House 3, Downtown." required onChange={(e) => setClientAddress(e.target.value)} value={clientAddress}
+                    className="border border-gray-300 p-2 rounded-md mb-6" />
 
                 <button type="submit" disabled={!isValid} className={`text-white font-bold text-center text-xl p-2 rounded-md transition-colors cursor-pointer
                 ${isValid ? 'bg-green-600 hover:bg-green-500' : 'bg-gray-400 cursor-not-allowed'}`}>

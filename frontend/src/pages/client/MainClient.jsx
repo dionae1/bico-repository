@@ -1,9 +1,8 @@
 import ClientCard from "../../components/ClientCard";
 import NoItems from "../../components/NoItems";
-import Button from "../../components/Button";
-import { useEffect, useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 import api from "../../api/client";
+import { useEffect, useState, useMemo } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
 function ClientPage() {
     const [clients, setClients] = useState([]);
@@ -35,13 +34,12 @@ function ClientPage() {
 
     return (
         <div className="max-w-4xl mx-auto p-6">
-            <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Manage your Clients</h1>
+            <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">Manage your Clients</h1>
 
-            <div className="mb-6 w-2/4 m-auto">
-                <Button title="Register new Client" func={() => { navigate("/clients/new"); }}></Button>
-            </div>
+            <Link className="p-2 transition-colors duration-200 cursor-pointer hover:text-white hover:bg-emerald-400 rounded text-lg"
+                to="/clients/new">Register a new client</Link>
 
-            <div className="bg-white shadow-lg rounded-lg p-6 mb-8">
+            <div className="bg-white shadow-lg rounded-lg p-6 mb-8 mt-4">
                 <div className="text-center mb-4">
                     <p className="text-2xl mb-4">Search</p>
                     <input
