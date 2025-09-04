@@ -61,7 +61,7 @@ function ClientForm({ onClientAdded }) {
                     className="border border-gray-300 p-2 rounded-md" />
 
                 <button type="submit" disabled={!isValid} className={`text-white font-bold text-center text-xl p-2 rounded-md transition-colors cursor-pointer
-                ${isValid ? 'bg-rose-600 hover:bg-rose-500' : 'bg-gray-400 cursor-not-allowed'}`}>
+                ${isValid ? 'bg-green-600 hover:bg-green-500' : 'bg-gray-400 cursor-not-allowed'}`}>
                     Add Client
                 </button>
             </form>
