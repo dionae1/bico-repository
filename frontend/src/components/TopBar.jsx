@@ -1,8 +1,6 @@
-import Button from "./Button";
-import { FaArrowRightToBracket } from "react-icons/fa6";
-import { FaReact, FaHome, FaCog, FaUsers, FaTruck, FaHeart, FaOutdent } from "react-icons/fa";
 import { logout } from "../services/auth";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { FaReact, FaHome, FaCog, FaUsers, FaTruck, FaSignOutAlt } from "react-icons/fa";
 
 const items = [
     {
@@ -39,7 +37,7 @@ function TopBar() {
     };
 
     return (
-        <div className="flex items-center p-1 pl-5 bg-rose-400 shadow-md/20 border-b-2 border-rose-500 fixed top-0 w-full">
+        <div className="flex items-center p-1 pl-5 bg-green-400 shadow-md/20 border-b-2 border-green-500 fixed top-0 w-full">
             <div className="flex items-center">
                 <FaReact className="text-2xl text-white mr-1" />
                 <h1 className="text-xl text-white font-bold">CSM</h1>
@@ -50,7 +48,7 @@ function TopBar() {
                     const icon = <item.icon className="inline-block mr-2" />;
 
                     return (
-                        <Link key={item.title} to={item.path} className={`text-white text-xl p-2 rounded-md hover:bg-rose-500 transition-colors duration-200 hover:shadow-xs hover:scale-105 active:scale-95 ${isActive ? 'bg-rose-500' : ''}`}>
+                        <Link key={item.title} to={item.path} className={`text-white text-xl p-2 rounded-md transition-colors duration-75 hover:shadow-xs ${isActive ? 'bg-green-600' : 'hover:bg-green-500'}`}>
                             {icon}
                             {item.title}
                         </Link>
@@ -58,7 +56,9 @@ function TopBar() {
                 })}
             </div>
             <div className="w-14 p-1">
-                <Button title={<FaArrowRightToBracket className="text-2xl text-white box-content" />} func={handleLogout} />
+                <button onClick={handleLogout} className="flex items-center justify-center w-full h-full text-white p-2 rounded-lg cursor-pointer hover:bg-green-500 transition-transform">
+                    <FaSignOutAlt className="text-2xl" />
+                </button>
             </div>
         </div>
     );
