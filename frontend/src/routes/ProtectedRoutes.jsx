@@ -24,7 +24,7 @@ function ProtectedRoutes({ children }) {
     return <div>Loading...</div>;
   }
 
-  return isAuthenticated ? children : <Navigate to="/" replace />;
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
 }
 
 export default ProtectedRoutes;

@@ -1,7 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import ProtectedRoutes from './routes/ProtectedRoutes'
-import LoginPage from './pages/LoginPage'
+
+import WelcomePage from './pages/WelcomePage'
 import HomePage from './pages/HomePage'
+
+import LoginPage from './pages/LoginPage'
+import SignupPage from './pages/SignupPage'
 
 import ClientPage from './pages/client/MainClient'
 import CreateClient from './pages/client/CreateClient'
@@ -17,8 +21,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route index element={<WelcomePage />} />
         <Route path='*' element={<NotFoundPage />} />
-        <Route index element={<LoginPage />} />
+        <Route path='login' element={<LoginPage />} />
+        <Route path='signup' element={<SignupPage />} />
 
         <Route path='/' element={<MainLayout />}>
 
