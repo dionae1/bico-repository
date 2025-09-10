@@ -1,4 +1,4 @@
-import Button from "./Button";
+import FormButton from "./FormButton";
 import { FaHome, FaCog, FaUsers, FaTruck, FaLeaf, FaOutdent } from "react-icons/fa";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { logout } from "../services/auth";
@@ -20,10 +20,15 @@ const items = [
         icon: FaUsers
     },
     {
-        title: 'Suppliers',
-        path: '/suppliers',
-        icon: FaTruck
+        title: 'Contracts',
+        path: '/contracts',
+        icon: FaOutdent
     },
+    // {
+    //     title: 'Suppliers',
+    //     path: '/suppliers',
+    //     icon: FaTruck
+    // },
 ];
 
 function NavBar() {

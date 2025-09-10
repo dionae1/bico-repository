@@ -7,12 +7,14 @@ import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 
-import ClientPage from './pages/client/MainClient'
+import MainClient from './pages/client/MainClient'
 import CreateClient from './pages/client/CreateClient'
 import ViewClient from './pages/client/ViewClient'
 
+import MainContract from './pages/contract/MainContract'
+import CreateContract from './pages/contract/CreateContract'
+
 import ServicesPage from './pages/ServicesPage'
-import SuppliersPage from './pages/SuppliersPage'
 import MainLayout from './components/layouts/MainLayout'
 import NotFoundPage from './pages/NotFoundPage'
 
@@ -36,7 +38,7 @@ function App() {
 
           <Route path='clients' element={
             <ProtectedRoutes>
-              <ClientPage />
+              <MainClient />
             </ProtectedRoutes>
           } />
 
@@ -59,9 +61,15 @@ function App() {
             </ProtectedRoutes>
           } />
 
-          <Route path='suppliers' element={
+          <Route path='contracts' element={
             <ProtectedRoutes>
-              <SuppliersPage />
+              <MainContract />
+            </ProtectedRoutes>
+          } />
+
+          <Route path='contracts/new' element={
+            <ProtectedRoutes>
+              <CreateContract />
             </ProtectedRoutes>
           } />
 
