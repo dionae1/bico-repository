@@ -1,13 +1,14 @@
+
+import { useEffect, useState, useMemo } from "react";
+import { Link } from "react-router-dom";
+
 import ClientCard from "../../components/ClientCard";
 import NoItems from "../../components/NoItems";
 import api from "../../api/client";
-import { useEffect, useState, useMemo } from "react";
-import { useNavigate, Link } from "react-router-dom";
 
-function ClientPage() {
+function MainClient() {
     const [clients, setClients] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const navigate = useNavigate();
 
     const fetchClients = async () => {
         try {
@@ -15,7 +16,9 @@ function ClientPage() {
             const { data } = response.data;
             setClients(data);
         } catch (error) {
-            console.error("Error fetching clients:", error);
+            if (error.response.data.message !== "No clients found") {
+                console.error("Error fetching clients:", error);
+            }
         }
     };
 
@@ -69,4 +72,4 @@ function ClientPage() {
     );
 }
 
-export default ClientPage;
+export default MainClient;

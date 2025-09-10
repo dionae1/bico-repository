@@ -2,7 +2,8 @@ import { FaReact } from "react-icons/fa";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/auth";
-import Button from "../components/Button";
+import FormButton from "../components/FormButton";
+import FormInput from "../components/FormInput";
 import welcome from "../assets/images/welcome.png";
 
 function LoginPage() {
@@ -37,12 +38,9 @@ function LoginPage() {
                         </div>
 
                         <form action="" className="flex flex-col justify-center m-auto mb-5 mt-10 w-3/4" onSubmit={handleLogin}>
-                            <label htmlFor="email" className="text-2xl mb-1">Email</label>
-                            <input type="text" id="email" placeholder="Email" className="mb-6 p-2 border border-gray-300 rounded" value={email} onChange={(e) => setEmail(e.target.value)} />
-
-                            <label htmlFor="password" className="text-2xl mb-1">Password</label>
-                            <input type="password" id="password" placeholder="Password" className="mb-6 p-2 border border-gray-300 rounded" value={password} onChange={(e) => setPassword(e.target.value)} />
-                            <Button title="Login" func={handleLogin} variant="login" />
+                            <FormInput id="email" label="Email" placeholder="Email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+                            <FormInput id="password" label="Password" placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <FormButton title="Login" func={handleLogin} variant="login" />
                         </form>
                     </div>
                 </div>
