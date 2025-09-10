@@ -4,11 +4,16 @@ from app.core.auth import hash_password, verify_password
 
 
 def create_client(
-    name: str, email: str, phone: str, address: str, status: bool = True
+    user_id: int, name: str, email: str, phone: str, address: str, status: bool = True
 ) -> Client:
     with SessionLocal() as db:
         client = Client(
-            name=name, email=email, phone=phone, address=address, status=status
+            user_id=user_id,
+            name=name,
+            email=email,
+            phone=phone,
+            address=address,
+            status=status,
         )
         db.add(client)
         db.commit()
@@ -31,8 +36,9 @@ def get_client_by_email(email: str) -> Client | None:
         return db.query(Client).filter(Client.email == email).first()
 
 
-def get_all_clients() -> list[Client]:
+def get_all_clients(user_id: int) -> list[Client]:
     with SessionLocal() as db:
+        return db.query(Client).filter(Client.user_id == user_id).all()
         return db.query(Client).all()
 
 

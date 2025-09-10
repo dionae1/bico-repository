@@ -17,6 +17,7 @@ def create_client(
 
     try:
         created_client = client_service.create_client(
+            user_id=current_user.id,
             name=client.name,
             email=client.email,
             phone=client.phone,
@@ -31,7 +32,8 @@ def create_client(
 
     except Exception as e:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Client creation failed"
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Client creation failed",
         )
 
     return ResponseSchema(
@@ -43,7 +45,7 @@ def create_client(
 
 @router.get("/", response_model=ResponseSchema)
 def get_all_clients(current_user: User = Depends(get_current_user)) -> ResponseSchema:
-    clients = client_service.get_all_clients()
+    clients = client_service.get_all_clients(current_user.id)
     response = [ResponseClient.from_model(client) for client in clients]
 
     if not response:
