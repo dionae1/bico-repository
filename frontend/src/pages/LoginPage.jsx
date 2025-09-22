@@ -1,4 +1,3 @@
-import { FaReact } from "react-icons/fa";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/auth";
@@ -32,9 +31,9 @@ function LoginPage() {
                 <div className="grid grid-cols-2 place-items-center mx-auto h-auto rounded-lg gap-10">
                     <img src={welcome} alt="Welcome" className="w-full h-auto" />
                     <div className="shadow-lg/10 p-10 rounded-lg bg-white w-full">
-                        <div className="flex flex-row items-center justify-center mt-10 space-x-4">
-                            <FaReact className="text-5xl text-center" />
-                            <h1 className="text-2xl font-bold text-center">CSM</h1>
+                        <div className="flex flex-col items-center justify-center mt-10 space-x-4">
+                            <h1 className="text-2xl font-bold text-center">Welcome back to BICO</h1>
+                            <h2 className="text-lg text-gray-600">Please enter your credentials to continue</h2>
                         </div>
 
                         <form action="" className="flex flex-col justify-center m-auto mb-5 mt-10 w-3/4" onSubmit={handleLogin}>

@@ -35,7 +35,9 @@ function SignupPage() {
     return (
         <>
             <div className="flex items-center justify-center h-screen bg-gray-100">
-                <div className="shadow-lg/10 p-10 rounded-lg bg-white w-2/5">
+                <div className="shadow-lg/10 p-10 rounded-lg bg-white w-2/5 flex flex-col items-center justify-center">
+                    <h1 className="text-3xl font-bold text-center text-gray-800">Create your account</h1>
+                    <h2 className="text-lg text-gray-600">Please enter your details to sign up</h2>
                     <form action="" className="flex flex-col justify-center m-auto mb-5 mt-10 w-3/4" onSubmit={handleSignup}>
                         <FormInput id="name" label="Name" placeholder="Name" type="text" value={name} onChange={(e) => setName(e.target.value)} />
                         <FormInput id="email" label="Email" placeholder="Email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
