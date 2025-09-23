@@ -1,4 +1,4 @@
-function FormInput({ id, label, placeholder, type = "text", value, required = false, onChange }) {
+function FormInput({ id, label, placeholder, type = "text", value, required = false, onChange, disable = false }) {
     return (
         <div>
             <label htmlFor={id} className="text-2xl mb-2">
@@ -12,6 +12,7 @@ function FormInput({ id, label, placeholder, type = "text", value, required = fa
                 value={value}
                 onChange={onChange}
                 required={required}
+                disabled={disable}
             />
         </div>
     );

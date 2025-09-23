@@ -13,8 +13,12 @@ import ViewClient from './pages/client/ViewClient'
 
 import MainContract from './pages/contract/MainContract'
 import CreateContract from './pages/contract/CreateContract'
+import ViewContract from './pages/contract/ViewContract'
 
-import ServicesPage from './pages/ServicesPage'
+import MainService from './pages/services/MainService'
+import CreateService from './pages/services/CreateService'
+import ViewService from './pages/services/ViewService'
+
 import MainLayout from './components/layouts/MainLayout'
 import NotFoundPage from './pages/NotFoundPage'
 
@@ -57,7 +61,19 @@ function App() {
 
           <Route path='services' element={
             <ProtectedRoutes>
-              <ServicesPage />
+              <MainService />
+            </ProtectedRoutes>
+          } />
+
+          <Route path='services/new' element={
+            <ProtectedRoutes>
+              <CreateService />
+            </ProtectedRoutes>
+          } />
+
+          <Route path='services/view/' element={
+            <ProtectedRoutes>
+              <ViewService />
             </ProtectedRoutes>
           } />
 
@@ -70,6 +86,12 @@ function App() {
           <Route path='contracts/new' element={
             <ProtectedRoutes>
               <CreateContract />
+            </ProtectedRoutes>
+          } />
+
+          <Route path='contracts/view/' element={
+            <ProtectedRoutes>
+              <ViewContract />
             </ProtectedRoutes>
           } />
 

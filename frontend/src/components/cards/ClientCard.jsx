@@ -1,7 +1,7 @@
 import { FaEdit } from "react-icons/fa";
-import { formatPhoneNumber } from "../services/util";
+import { formatPhoneNumber } from "../../services/util";
 import { FaDeleteLeft } from "react-icons/fa6";
-import api from "../api/client";
+import api from "../../api/client";
 import { useNavigate } from "react-router-dom";
 
 function ClientCard({ client, refreshClients }) {
@@ -25,11 +25,11 @@ function ClientCard({ client, refreshClients }) {
     return (
         <div className="border p-4 rounded-md">
             <div className="grid grid-cols-[1fr_auto] gap-4 mt-1 p-1">
-                <div className="">
-                    <span className="block text-xl">{client.name}</span>
-                    <span className="block">Email: {client.email}</span>
-                    <span className="block">Phone: {formatPhoneNumber(client.phone)}</span>
-                    <span className="block">Address: {client.address}</span>
+                <div>
+                    <h3 className="text-lg font-semibold">{client.name}</h3>
+                    <p className="text-sm text-gray-600">Email: {client.email}</p>
+                    <p className="text-sm text-gray-600">Phone: {formatPhoneNumber(client.phone)}</p>
+                    <p className="text-sm text-gray-600">Address: {client.address}</p>
                 </div>
 
                 <div className="flex space-y-4 justify-end flex-col">

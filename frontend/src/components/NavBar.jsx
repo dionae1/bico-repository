@@ -1,5 +1,4 @@
-import FormButton from "./FormButton";
-import { FaHome, FaCog, FaUsers, FaTruck, FaLeaf, FaOutdent } from "react-icons/fa";
+import { FaHome, FaCog, FaUsers, FaLeaf, FaOutdent } from "react-icons/fa";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { logout } from "../services/auth";
 
@@ -51,7 +50,7 @@ function NavBar() {
 
             {/* Header */}
             <div className="text-center my-6">
-                <h1 className="text-2xl text-slate-700 font-bold tracking-wide">CSM</h1>
+                <h1 className="text-2xl text-slate-700 font-bold tracking-wide">BICO</h1>
                 <p className="text-xs text-slate-500 font-medium">Services Manager</p>
             </div>
 
