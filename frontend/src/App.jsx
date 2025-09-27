@@ -53,7 +53,7 @@ function App() {
           } />
 
 
-          <Route path='clients/view/' element={
+          <Route path='clients/view/:id' element={
             <ProtectedRoutes>
               <ViewClient />
             </ProtectedRoutes>
@@ -71,7 +71,7 @@ function App() {
             </ProtectedRoutes>
           } />
 
-          <Route path='services/view/' element={
+          <Route path='services/view/:id' element={
             <ProtectedRoutes>
               <ViewService />
             </ProtectedRoutes>
@@ -89,7 +89,7 @@ function App() {
             </ProtectedRoutes>
           } />
 
-          <Route path='contracts/view/' element={
+          <Route path='contracts/view/:id' element={
             <ProtectedRoutes>
               <ViewContract />
             </ProtectedRoutes>

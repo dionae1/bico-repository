@@ -34,12 +34,12 @@ function MainService() {
     return (
         <div className="max-w-4xl mx-auto p-6">
             <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Manage your Services</h1>
-            <Link className="p-2 transition-colors duration-200 cursor-pointer hover:text-white hover:bg-emerald-400 rounded text-lg"
-                to="/services/new">Register a new service</Link>
+
 
             <div className="bg-white shadow-lg rounded-lg p-6 mt-4">
-                <div className="text-center mb-4">
-                    <p className="text-2xl mb-4">Search</p>
+                <Link className="p-2 transition-colors duration-200 cursor-pointer hover:text-white hover:bg-emerald-400 rounded text-lg"
+                    to="/services/new">Register a new service</Link>
+                <div className="mb-4 mt-8">
                     <input
                         type="text"
                         placeholder="Search by name"

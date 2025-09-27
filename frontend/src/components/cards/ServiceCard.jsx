@@ -19,7 +19,7 @@ function ServiceCard({ service, refreshServices }) {
     };
 
     const handleView = () => {
-        navigate(`/services/view/?id=${service.id}`);
+        navigate(`/services/view/${service.id}`);
     };
 
     return (
@@ -32,7 +32,7 @@ function ServiceCard({ service, refreshServices }) {
                     <p className="text-sm text-gray-600">Cost: U${service.cost.toFixed(2)}</p>
                     <p className="text-sm text-gray-600">Periodicity: {service.periodicity}</p>
                 </div>
-                
+
                 <div className="flex space-y-4 justify-around my-2 flex-col">
                     <button onClick={handleView} className="text-white text-center text-xl bg-blue-500 p-2 rounded-md hover:bg-blue-600 transition-colors cursor-pointer w-10 flex items-center justify-center">
                         <FaEdit />

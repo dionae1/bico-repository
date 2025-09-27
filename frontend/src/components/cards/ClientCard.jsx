@@ -19,7 +19,7 @@ function ClientCard({ client, refreshClients }) {
     }
 
     const handleView = () => {
-        navigate(`/clients/view/?id=${client.id}`);
+        navigate(`/clients/view/${client.id}`);
     }
 
     return (

@@ -1,6 +1,5 @@
-import useQuery from "../../hooks/useQuery";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import BackButton from "../../components/BackButton";
 
 import api from "../../api/client";
@@ -8,7 +7,7 @@ import FormInput from "../../components/FormInput";
 
 
 function ViewClient() {
-    const id = useQuery().get("id");
+    const { id } = useParams();
     const navigate = useNavigate();
 
     const [client, setClient] = useState(null);

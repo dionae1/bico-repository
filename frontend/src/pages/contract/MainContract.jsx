@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 
-import ContractCard from "../../components/ContractCard";
+import ContractCard from "../../components/cards/ContractCard";
 import NoItems from "../../components/NoItems";
 import api from "../../api/client";
 
@@ -43,12 +43,11 @@ function MainContract() {
         <div className="max-w-4xl mx-auto p-6">
             <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">Manage your contracts</h1>
 
-            <Link className="p-2 transition-colors duration-200 cursor-pointer hover:text-white hover:bg-emerald-400 rounded text-lg"
-                to="/contracts/new">Register a new contract</Link>
 
             <div className="bg-white shadow-lg rounded-lg p-6 mb-8 mt-4">
-                <div className="text-center mb-4">
-                    <p className="text-2xl mb-4">Search</p>
+                <Link className="p-2 transition-colors duration-200 cursor-pointer hover:text-white hover:bg-emerald-400 rounded text-lg"
+                    to="/contracts/new">Register a new contract</Link>
+                <div className="mb-4 mt-8">
                     <input
                         type="text"
                         placeholder="Search by name"

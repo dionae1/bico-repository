@@ -20,7 +20,7 @@ function ContractCard({ contract, refreshContracts }) {
     }
 
     const handleView = () => {
-        navigate(`/contracts/view/?id=${contract.id}`);
+        navigate(`/contracts/view/${contract.id}`);
     }
 
 
