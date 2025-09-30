@@ -19,7 +19,8 @@ function CreateContract() {
                 <h2 className="text-xl font-semibold text-gray-800 text-center">Fill the form to create a new contract.</h2>
                 <ContractForm onContractCreated={handleContractCreated} />
             </div>
-        </div>);
+        </div>
+    );
 }
 
 export default CreateContract;

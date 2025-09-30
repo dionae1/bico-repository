@@ -134,12 +134,7 @@ function ContractForm({ onContractCreated }) {
                             </option>
                         ))}
                     </select>
-
-                    <Link className="p-1 mt-2 transition-colors duration-200 cursor-pointer hover:text-white hover:bg-emerald-400 rounded text-lg"
-                        to="/services/new">Register a new service</Link>
                 </div>
-
-
 
                 <div className="mb-6 space-y-3">
                     <label htmlFor="clientId" className="text-2xl">Client to link</label>
@@ -151,12 +146,8 @@ function ContractForm({ onContractCreated }) {
                             </option>
                         ))}
                     </select>
-
-                    <Link className="p-1 mt-2 transition-colors duration-200 cursor-pointer hover:text-white hover:bg-emerald-400 rounded text-lg"
-                        to="/clients/new">Register a new client</Link>
                 </div>
-
-
+                
                 <button type="submit" disabled={!isValid} className={`text-white font-bold text-center text-xl p-2 rounded-md transition-colors cursor-pointer
                 ${isValid ? 'bg-green-600 hover:bg-green-500' : 'bg-gray-400 cursor-not-allowed'}`}>
                     Add Contract
