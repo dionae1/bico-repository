@@ -56,15 +56,13 @@ function ContractCard({ contract, refreshContracts }) {
                         <FaDeleteLeft />
                     </button>
 
-                    {isModalOpen && (
-                        <ConfirmModal
-                            isOpen={isModalOpen}
-                            onClose={closeModal}
-                            onConfirm={handleConfirmDelete}
-                            title="Confirm Deletion"
-                            message={`Are you sure you want to delete contract '${contract.client.name} - ${contract.service.name}'? This action cannot be undone.`}
-                        />
-                    )}
+                    <ConfirmModal
+                        isOpen={isModalOpen}
+                        onClose={closeModal}
+                        onConfirm={handleConfirmDelete}
+                        title="Confirm Deletion"
+                        message={`Are you sure you want to delete contract '${contract.client.name} - ${contract.service.name}'? This action cannot be undone.`}
+                    />
                 </div>
             </div>
         </div>

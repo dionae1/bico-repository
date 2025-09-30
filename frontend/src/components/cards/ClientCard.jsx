@@ -57,15 +57,13 @@ function ClientCard({ client, refreshClients }) {
                         <FaDeleteLeft />
                     </button>
 
-                    {isModalOpen && (
-                        <ConfirmModal
-                            isOpen={isModalOpen}
-                            onClose={closeModal}
-                            onConfirm={handleConfirmDelete}
-                            title="Confirm Deletion"
-                            message={`Are you sure you want to delete client - ${client.name}? This action cannot be undone.`}
-                        />
-                    )}
+                    <ConfirmModal
+                        isOpen={isModalOpen}
+                        onClose={closeModal}
+                        onConfirm={handleConfirmDelete}
+                        title="Confirm Deletion"
+                        message={`Are you sure you want to delete client - ${client.name}? This action cannot be undone.`}
+                    />
                 </div>
             </div>
 
