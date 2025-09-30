@@ -1,4 +1,5 @@
 import FormInput from "../FormInput"
+import FormButton from "../buttons/FormButton"
 import api from "../../api/client"
 import { useState } from "react"
 function ClientForm({ onClientCreated }) {
@@ -75,10 +76,7 @@ function ClientForm({ onClientCreated }) {
                     onChange={e => setClientAddress(e.target.value)} value={clientAddress}
                 />
 
-                <button type="submit" disabled={!isValid} className={`text-white font-bold text-center text-xl p-2 rounded-md transition-colors cursor-pointer
-                ${isValid ? 'bg-green-600 hover:bg-green-500' : 'bg-gray-400 cursor-not-allowed'}`}>
-                    Add Client
-                </button>
+                <FormButton title="Add Client" onClick={handleSubmit} isValid={isValid} />
             </form>
         </div>
     )

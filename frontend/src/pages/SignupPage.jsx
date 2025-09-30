@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import FormButton from "../components/FormButton";
+import FormButton from "../components/buttons/FormButton";
 import FormInput from "../components/FormInput";
 
 import { register, login } from "../services/auth";
@@ -42,7 +42,7 @@ function SignupPage() {
                         <FormInput id="name" label="Name" placeholder="Name" type="text" value={name} onChange={(e) => setName(e.target.value)} />
                         <FormInput id="email" label="Email" placeholder="Email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
                         <FormInput id="password" label="Password" placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                        <FormButton title="Sign Up" func={handleSignup} variant="login" />
+                        <FormButton title="Sign Up" onClick={handleSignup} />
                     </form>
                 </div>
             </div>
