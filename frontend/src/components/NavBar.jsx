@@ -22,12 +22,7 @@ const items = [
         title: 'Contracts',
         path: '/contracts',
         icon: FaOutdent
-    },
-    // {
-    //     title: 'Suppliers',
-    //     path: '/suppliers',
-    //     icon: FaTruck
-    // },
+    }
 ];
 
 function NavBar() {
@@ -41,12 +36,6 @@ function NavBar() {
 
     return (
         <aside className="w-64 bg-gradient-to-b from-slate-100 via-slate-200 flex-shrink-0 flex flex-col shadow-xl sticky top-0 h-screen overflow-hidden border-r border-slate-300">
-            <div className="absolute top-10 right-4 opacity-80">
-                <FaLeaf className="text-emerald-400 text-lg animate-pulse" />
-            </div>
-            <div className="absolute bottom-20 left-4 opacity-80">
-                <FaLeaf className="text-emerald-400 text-sm animate-bounce" style={{ animationDelay: '1s' }} />
-            </div>
 
             {/* Header */}
             <div className="text-center my-6">
