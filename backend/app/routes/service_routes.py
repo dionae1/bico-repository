@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from psycopg2 import IntegrityError
+from sqlalchemy.exc import IntegrityError
 from app.db.models import Service
 from app.models.user import User
 from app.services import service as services_
@@ -137,7 +137,7 @@ def delete_service(
     except IntegrityError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Cannot delete service due to existing dependencies",
+            detail="Cannot delete service due to existing contracts",
         )
 
     except Exception as e:
