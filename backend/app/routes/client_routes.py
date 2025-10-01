@@ -149,7 +149,21 @@ def delete_client(
     client_id: int, current_user: User = Depends(get_current_user)
 ) -> ResponseSchema:
 
-    success = client_service.delete_client(client_id)
+    try:
+        success = client_service.delete_client(client_id)
+
+    except IntegrityError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Cannot delete client due to existing contracts",
+        )
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Client deletion failed",
+        )
+
     if not success:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Client not found"

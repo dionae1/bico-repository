@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
+from psycopg2 import IntegrityError
 from app.db.models import Service
 from app.models.user import User
 from app.services import service as services_
@@ -129,7 +130,22 @@ def toggle_service_status(
 def delete_service(
     service_id: int, current_user: User = Depends(get_current_user)
 ) -> ResponseSchema:
-    success = services_.delete_service(service_id=service_id)
+
+    try:
+        success = services_.delete_service(service_id=service_id)
+
+    except IntegrityError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Cannot delete service due to existing dependencies",
+        )
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Service deletion failed",
+        )
+
     if not success:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Service not found"
