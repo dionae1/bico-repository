@@ -1,5 +1,5 @@
 import ContractForm from "../../components/forms/ContractForm";
-import BackButton from "../../components/BackButton";
+import BackButton from "../../components/buttons/BackButton";
 
 import { useNavigate } from "react-router-dom";
 

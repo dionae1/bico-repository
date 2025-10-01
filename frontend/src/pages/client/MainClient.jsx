@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import ClientCard from "../../components/cards/ClientCard";
 import NoItems from "../../components/NoItems";
+
 import api from "../../api/client";
 
 function MainClient() {

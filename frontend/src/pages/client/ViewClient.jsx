@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import BackButton from "../../components/BackButton";
+import BackButton from "../../components/buttons/BackButton";
 
 import api from "../../api/client";
 import FormInput from "../../components/FormInput";
