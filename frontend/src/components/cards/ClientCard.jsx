@@ -4,13 +4,17 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import { formatPhoneNumber } from "../../services/util";
+
 import ConfirmModal from "../modals/ConfirmModal";
+import ErrorModal from "../modals/ErrorModal";
+
 import api from "../../api/client";
 
 function ClientCard({ client, refreshClients }) {
 
     const navigate = useNavigate();
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [confirmModal, setConfirmModal] = useState(false);
+    const [error, setError] = useState(null);
 
     const handleDelete = () => {
         api.delete(`/clients/${client.id}`)
@@ -18,7 +22,9 @@ function ClientCard({ client, refreshClients }) {
                 refreshClients();
             })
             .catch((error) => {
-                console.error("Error deleting client:", error);
+                if (error.response && error.response.data) {
+                    setError(error.response.data.message);
+                }
             });
     }
 
@@ -27,11 +33,11 @@ function ClientCard({ client, refreshClients }) {
     }
 
     const openModal = () => {
-        setIsModalOpen(true);
+        setConfirmModal(true);
     }
 
     const closeModal = () => {
-        setIsModalOpen(false);
+        setConfirmModal(false);
     }
 
     const handleConfirmDelete = () => {
@@ -41,6 +47,7 @@ function ClientCard({ client, refreshClients }) {
 
     return (
         <div className="border p-4 rounded-md">
+            {error && <ErrorModal message={error} onClose={() => setError(null)} />}
             <div className="grid grid-cols-[1fr_auto] gap-4 mt-1 p-1">
                 <div>
                     <h3 className="text-lg font-semibold">{client.name}</h3>
@@ -50,7 +57,7 @@ function ClientCard({ client, refreshClients }) {
                 </div>
 
                 <div className="flex space-y-4 justify-end flex-col">
-                    <button onClick={handleView} className="text-white text-center text-xl bg-blue-500 p-2 rounded-md hover:bg-blue-600 transition-colors cursor-pointer w-10 flex items-center justify-center">
+                    <button onClick={handleView} className="text-white text-center text-xl bg-gray-700 p-2 rounded-md hover:bg-gray-800 transition-colors cursor-pointer w-10 flex items-center justify-center">
                         <FaEdit />
                     </button>
                     <button onClick={openModal} className="text-white font-bold text-center text-xl bg-red-500 p-2 rounded-md hover:bg-red-800 transition-colors cursor-pointer w-10 flex items-center justify-center">
@@ -58,7 +65,7 @@ function ClientCard({ client, refreshClients }) {
                     </button>
 
                     <ConfirmModal
-                        isOpen={isModalOpen}
+                        isOpen={confirmModal}
                         onClose={closeModal}
                         onConfirm={handleConfirmDelete}
                         title="Confirm Deletion"
@@ -66,7 +73,6 @@ function ClientCard({ client, refreshClients }) {
                     />
                 </div>
             </div>
-
         </div>
     );
 }

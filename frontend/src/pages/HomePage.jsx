@@ -33,7 +33,7 @@ function HomePage() {
             <div className="mt-8 bg-white shadow-lg rounded-lg p-6">
                 <h2 className="text-xl font-semibold mb-4 text-gray-800">Dashboard</h2>
                 <p className="text-gray-600">
-                    Use the navigation menu to manage your clients, services, and suppliers.
+                    Use the navigation menu to manage your clients, services.
                 </p>
             </div>
         </div>
